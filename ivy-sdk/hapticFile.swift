@@ -12,6 +12,7 @@ import UIKit
 public class hapticFile {
   
     public static func playEffect() {
+        print("HAPTIC")
         let generator = UIImpactFeedbackGenerator(style: .light)
         generator.impactOccurred()
     }
