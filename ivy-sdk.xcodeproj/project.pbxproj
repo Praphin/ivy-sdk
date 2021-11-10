@@ -14,7 +14,7 @@
 
 /* Begin PBXFileReference section */
 		717D3272273ABBFA006E880E /* hapticFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hapticFile.swift; sourceTree = "<group>"; };
-		71CBD90F273A90BE00B4C175 /* ivy_sdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ivy_sdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		71CBD90F273A90BE00B4C175 /* Plum.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Plum.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		71CBD912273A90BE00B4C175 /* ivy_sdk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ivy_sdk.h; sourceTree = "<group>"; };
 		71CBD913273A90BE00B4C175 /* ivy_sdk.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = ivy_sdk.docc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -41,7 +41,7 @@
 		71CBD910273A90BE00B4C175 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				71CBD90F273A90BE00B4C175 /* ivy_sdk.framework */,
+				71CBD90F273A90BE00B4C175 /* Plum.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -85,7 +85,7 @@
 			);
 			name = "ivy-sdk";
 			productName = "ivy-sdk";
-			productReference = 71CBD90F273A90BE00B4C175 /* ivy_sdk.framework */;
+			productReference = 71CBD90F273A90BE00B4C175 /* Plum.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -285,7 +285,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.psp.ivy-sdk";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = Plum;
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -314,7 +314,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.psp.ivy-sdk";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = Plum;
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
