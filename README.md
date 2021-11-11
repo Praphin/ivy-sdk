@@ -29,4 +29,4 @@ Then, run the following command:
 $ pod install
 ```
 
-> You might need to use the `--repo-update` flag to ensure the specs repository is aware of the latest version of PusherChatkit.
+> You might need to use the `--repo-update` flag to ensure the specs repository is aware of the latest version of Plum-SDK.
