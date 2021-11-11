@@ -1,7 +1,5 @@
 # Plum iOS sdk
 
-cocoapods - pod 'Plum-SDK'
-
 ## Installation
 
 ### CocoaPods
@@ -21,7 +19,7 @@ use_frameworks!
 
 # Replace `<Your Target Name>` with your app's target name.
 target '<Your Target Name>' do
-  pod 'PusherChatkit'
+  pod 'Plum-SDK'
 end
 ```
 
