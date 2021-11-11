@@ -1,4 +1,4 @@
-# Plum iOS sdk
+# Plum iOS Framework
 
 ## Installation
 
