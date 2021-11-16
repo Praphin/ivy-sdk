@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		717D3273273ABBFA006E880E /* hapticFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717D3272273ABBFA006E880E /* hapticFile.swift */; };
+		717D32A6273D1283006E880E /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717D32A5273D1283006E880E /* Authentication.swift */; };
 		71CBD914273A90BE00B4C175 /* ivy_sdk.docc in Sources */ = {isa = PBXBuildFile; fileRef = 71CBD913273A90BE00B4C175 /* ivy_sdk.docc */; };
 		71CBD915273A90BE00B4C175 /* ivy_sdk.h in Headers */ = {isa = PBXBuildFile; fileRef = 71CBD912273A90BE00B4C175 /* ivy_sdk.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		717D3272273ABBFA006E880E /* hapticFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hapticFile.swift; sourceTree = "<group>"; };
+		717D32A5273D1283006E880E /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		71CBD90F273A90BE00B4C175 /* Plum.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Plum.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		71CBD912273A90BE00B4C175 /* ivy_sdk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ivy_sdk.h; sourceTree = "<group>"; };
 		71CBD913273A90BE00B4C175 /* ivy_sdk.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = ivy_sdk.docc; sourceTree = "<group>"; };
@@ -30,6 +32,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		717D32A3273D1177006E880E /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				717D32A4273D1193006E880E /* Resource */,
+				717D32A5273D1283006E880E /* Authentication.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		717D32A4273D1193006E880E /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
 		71CBD905273A90BE00B4C175 = {
 			isa = PBXGroup;
 			children = (
@@ -51,6 +69,7 @@
 			children = (
 				71CBD912273A90BE00B4C175 /* ivy_sdk.h */,
 				717D3272273ABBFA006E880E /* hapticFile.swift */,
+				717D32A3273D1177006E880E /* Authentication */,
 				71CBD913273A90BE00B4C175 /* ivy_sdk.docc */,
 			);
 			path = "ivy-sdk";
@@ -137,6 +156,7 @@
 			files = (
 				717D3273273ABBFA006E880E /* hapticFile.swift in Sources */,
 				71CBD914273A90BE00B4C175 /* ivy_sdk.docc in Sources */,
+				717D32A6273D1283006E880E /* Authentication.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
