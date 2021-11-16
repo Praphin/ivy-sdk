@@ -11,6 +11,10 @@ public class Authentication {
     
     public static func authSDK() {
         
+        print("SDK AUTHENTICATION STARTED")
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        print("Version: \(version)")
+
         if let path = Bundle.main.path(forResource: "SDK-Info", ofType: "plist") {
             
             if let dictionary = NSDictionary(contentsOfFile: path) {
