@@ -9,10 +9,10 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "Plum-SDK"
-  spec.version      = "1.0.1"
+  spec.version      = "1.0.2"
   spec.summary      = "SDK For Wellness care"
 
-  spec.description  = "Wellthy helps individuals and families manage and coordinate care for a chronically ill, aging, or disabled loved one."
+  spec.description  = "Wellthy helps individuals and families manage and coordinate care for a chronically ill, aging, or disabled loved one. 1.0.2"
 
   spec.homepage     = "https://github.com/Praphin/ivy-sdk"
   spec.license      = "MIT"

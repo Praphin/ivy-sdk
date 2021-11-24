@@ -1,0 +1,332 @@
+//
+//  ApiResource.swift
+//  ivy-sdk
+//
+//  Created by Praphin SP on 23/11/21.
+//
+
+import Foundation
+import Alamofire
+
+
+class InternetConnectivity {
+    class var isConnected:Bool {
+        return NetworkReachabilityManager()?.isReachable ?? false
+    }
+}
+
+let concurrentQueue = DispatchQueue(label: "com.queue.Concurrent", attributes: .concurrent)
+var workItems = [DispatchWorkItem]()
+
+class ApiResource: NSObject {
+    
+    static var isTokenRefreshing = false
+    static var isTokenUpdated = false
+    
+
+    func apiRequest(urlStr : String, method: HTTPMethod, header : [String:String]?, parameters: [String:Any]?, completion:@escaping ((_ code: Int, _ response: Any?, _ error: Error?)->Void)) {
+        
+        let headers: HTTPHeaders = [
+//            "x-id-token": AppVariable.shared.getValueFromUserDefault(key: DataKey.idToken) as? String ?? "",
+//            "x-access-token": UserData.shared?.token ?? ""
+                "x-id-token":  "",
+                "x-access-token":  ""
+        ]
+        
+        do {
+            
+            guard let url = try urlStr.addingUrlPercentEncoding()?.asURL() else { return
+                print("not valid url : \(urlStr)")
+            }
+            
+            let dataRequest = AF.request(url, method: method, parameters: parameters, encoding: URLEncoding.default, headers: headers)
+            dataRequest.responseJSON { (response) in
+                
+                DispatchQueue.main.async {
+                    
+                    if method == .head {
+                        let value: Any? = response.response?.allHeaderFields
+                        completion(response.response?.statusCode ?? 600, value,nil)
+                    } else {
+                        switch response.result {
+                        case .success(let value):
+                            completion(response.response?.statusCode ?? 600, value,nil)
+                        case .failure(let error):
+                            completion(response.response?.statusCode ?? 600, nil,error)
+                        }
+                    }
+                }
+            }
+            
+        }catch {
+            print("not valid url : \(urlStr)")
+        }
+    }
+    
+    func getApiCall(url : String, headers : [String:String]?, completion:@escaping ((_ code: Int, _ response: Any?, _ error: Error?)->Void))  {
+        self.apiCallWithToken(urlStr: url, method: .get, header: headers, parameters: nil) { (code, response, error) in
+            DispatchQueue.main.async {
+                completion(code, response , error)
+            }
+        }
+    }
+    
+    func postApiCall(url : String, parameters: [String:Any], headers : [String:String]?, completion:@escaping ((_ code: Int, _ response: Any?, _ error: Error?)->Void))  {
+        
+        self.apiCallWithToken(urlStr: url, method: .post, header: headers, parameters: parameters) { (code, response, error) in
+            DispatchQueue.main.async {
+                completion(code, response, error)
+            }
+        }
+        
+    }
+    
+    func deleteApiCall(url : String, parameters: [String:Any]?, headers : [String:String]?, completion:@escaping ((_ code: Int, _ response: Any?, _ error: Error?)->Void))  {
+        
+        self.apiCallWithToken(urlStr: url, method: .delete, header: headers, parameters: parameters) { (code, response, error) in
+            DispatchQueue.main.async {
+                completion(code, response, error)
+            }
+        }
+        
+    }
+    
+    func patchApiCall(url : String, parameters: [String:Any], headers : [String:String]?, completion:@escaping ((_ code: Int, _ response: Any?, _ error: Error?)->Void))  {
+        
+        self.apiCallWithToken(urlStr: url, method: .patch, header: headers, parameters: parameters) { (code, response, error) in
+            DispatchQueue.main.async {
+                completion(code, response, error)
+            }
+        }
+        
+    }
+
+    
+    func headApiCall(url : String, headers : [String:String]?, completion:@escaping ((_ code: Int, _ response: Any?, _ error: Error?)->Void))  {
+        
+        self.apiCallWithToken(urlStr: url, method: .head, header: headers, parameters: nil) { (code, response, error) in
+            DispatchQueue.main.async {
+                completion(code, response, error)
+            }
+        }
+        
+    }
+    
+    func apiCallWithToken(urlStr : String, method: HTTPMethod, header : [String:String]?, parameters: [String:Any]?, completion:@escaping ((_ code: Int, _ response: Any?, _ error: Error?)->Void)) {
+
+        let u = urlStr
+        let callWithDelay: (()->Void) = {
+            self.apiCallWithToken(urlStr: urlStr, method: method, header: header, parameters: parameters) { (code, response, error) in
+                completion(code, response, error)
+            }
+        } // in case token refreshing
+        
+        var headerData = [String: String]()
+        if let header = header {
+            headerData = header
+        }
+//        headerData["x-id-token"] = AppVariable.shared.getValueFromUserDefault(key: DataKey.idToken) as? String
+//        headerData["x-access-token"] = UserData.shared?.token
+  
+        headerData["x-id-token"] = ""
+        headerData["x-access-token"] = ""
+
+        if urlStr.contains("chat.wellthy.app/conversation/metadata") {
+            print(urlStr)
+        }
+        
+        if urlStr.contains("chat.wellthy.app/user/register") {
+            print(urlStr)
+        }
+
+        self.apiCall(urlStr: urlStr, method: method, header: headerData, parameters: parameters) { (code, response, error) in
+            if urlStr.contains("chat.wellthy.app/user/register") {
+                print(urlStr)
+            }
+            if code == 401 && urlStr.contains("chat.wellthy.app") {
+                print(urlStr)
+            }
+            if code == 401 && !urlStr.contains("chat.wellthy.app") { // && !urlStr.contains("diary/peakFlow")
+                let work: DispatchWorkItem? = DispatchWorkItem {
+                    
+                    var isTokenExist = false
+                    
+                    if  isTokenExist {
+                        if ApiResource.isTokenUpdated {
+                            print("token-> token updated by another api: \(u)")
+                            workItems.removeAll()
+                            callWithDelay()
+                        }
+//                        else if ApiResource.isTokenRefreshing == false {
+//                            print("token-> updating token: \(u)")
+//                            ApiResource.isTokenRefreshing = true
+//                            var dict = [String: String]()
+//                            dict["token"] = UserData.shared?.token
+//                            dict["refreshtoken"] = UserData.shared?.refreshtoken
+//                            self.apiCall(urlStr: URLConstants.refreshTokenURL, method: .post, header: nil, parameters: dict) { (code, response, error) in
+//                                if code == 200, let response = response as? [String:Any], let dataDict = response["data"] as? [String:Any] {
+//                                    print("token-> token updated: \(u)")
+//                                    let newToken = dataDict["token"]
+//                                    let newRefreshtoken = dataDict["refreshtoken"]
+//                                    UserData.shared?.token = newToken as? String
+//                                    UserData.shared?.refreshtoken = newRefreshtoken as? String
+//                                    UserData.shared?.save()
+//                                    ApiResource.isTokenRefreshing = false
+//                                    ApiResource.isTokenUpdated = true
+//                                    workItems.removeAll()
+//                                    callWithDelay()
+//                                }
+//                                else {
+//                                    print("token-> token expired need to logout: \(u)")
+//                                    for work in workItems {
+//                                        work.cancel()
+//                                    }
+//                                    workItems.removeAll()
+//                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+//                                        ApiResource.isTokenRefreshing = false
+//                                        if !appDelegate!.isSplashRunning {
+//                                            AppRouter.loadSessionExpiredView()
+//                                        }
+//                                        //clear scheduled/ fired notification
+//                                        LocalNotificationManager.shared.deleteAll()
+//                                        completion(code, response, error)
+//                                    }
+//                                }
+//                            }
+//                        }
+//                        else {
+//                            completion(code, response, error)
+//                        }
+                    }
+                    else {
+                        print("token-> token expired need to logout: \(u)")
+                        for work in workItems {
+                            work.cancel()
+                        }
+                        workItems.removeAll()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                            ApiResource.isTokenRefreshing = false
+                        }
+                    }
+                }
+                if let work = work {
+                    workItems.append(work)
+                }
+                concurrentQueue.async(flags: .barrier) {
+                    work?.perform()
+                }
+            }
+            else {
+                completion(code, response, error)
+            }
+        }
+    }
+    
+    func apiCall(urlStr : String, method: HTTPMethod, header : [String:String]?, parameters: [String:Any]?, encoding: ParameterEncoding = JSONEncoding.default, completion:@escaping ((_ code: Int, _ response: Any?, _ error: Error?)->Void)) {
+        if let r = NetworkReachabilityManager(), !r.isReachable {
+            completion(600, nil,nil)
+            return
+        }
+        else {
+
+        }
+        do {
+            let completeUrlStr = urlStr.addingUrlPercentEncoding()
+            guard let url = try completeUrlStr?.asURL() else { return
+                print("not valid url : \(urlStr)")
+            }
+            
+            var headers: HTTPHeaders?
+            
+            if let header = header {
+                headers = HTTPHeaders(header)
+            }
+            
+            let dataRequest = AF.request(url, method: method, parameters: parameters, encoding: encoding, headers: headers)
+            dataRequest.responseJSON { (response) in
+                DispatchQueue.main.async {
+                    if method == .head {
+                        let value: Any? = response.response?.allHeaderFields
+                        completion(response.response?.statusCode ?? 600, value,nil)
+                    }
+                    else {
+
+                        switch response.result {
+                        case .success(let value):
+                            completion(response.response?.statusCode ?? 600, value,nil)
+                        case .failure(let error):
+                            completion(response.response?.statusCode ?? 600, nil,error)
+                        }
+
+                    }
+                }
+            }
+        } catch {
+            print("not valid url : \(urlStr)")
+        }
+    }
+    
+    func fileUpload(urlStr : String, data: Data, param: [String:String], completion:@escaping ((_ code: Int, _ response: Any?, _ error: Error?)->Void)) {
+        let headers: HTTPHeaders? = HTTPHeaders(param)
+
+        let uploadRequest = AF.upload(data, to: urlStr, method: .put, headers: headers)
+        uploadRequest.response(queue: DispatchQueue.global()) { (response) in
+            if response.response?.statusCode == 200 {
+                completion(response.response?.statusCode ?? 600, nil ,nil)
+            }
+            else {
+                completion(response.response?.statusCode ?? 600, nil,response.error)
+            }
+        }
+    }
+    
+    func fileDownload(urlStr : String, fileName: String, completion:@escaping ((_ code: Int, _ response: Any?, _ error: Error?)->Void)) {
+        
+    
+        let destination: DownloadRequest.Destination = { _, _ in
+            var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            documentsURL.appendPathComponent(fileName)
+            return (documentsURL, [.removePreviousFile])
+        }
+        
+        AF.download(urlStr, to: destination).response { response in
+
+            if response.fileURL != nil {
+                print(response.fileURL!)
+                completion(response.response?.statusCode ?? 200, nil ,nil)
+            } else {
+                completion(response.response?.statusCode ?? 600, nil ,nil)
+            }
+        }
+    }
+    
+    func imageDownload(url : URL, success:@escaping ((_ image: UIImage)->Void), failure: @escaping ((_ error: Error)->Void)) {
+        do {
+            _ = AF.request(url).responseData { (responseData) in
+                DispatchQueue.main.async {
+                    switch responseData.result {
+                    case .success(let imageData):
+                        let img = UIImage(data: imageData) ?? UIImage()
+                        success(img)
+                    case .failure(let error):
+                        failure(error)
+                    }
+                }
+            }
+            /*
+             let dataRequest = AF.request(url)
+             dataRequest.responseImage { response in
+             DispatchQueue.main.async {
+             switch response.result {
+             case .success(let image):
+             success(image)
+             case .failure(let error):
+             failure(error)
+             }
+             }
+             }   */
+        } catch {
+            print("not valid url : \(url)")
+        }
+    }
+}

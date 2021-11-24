@@ -9,16 +9,32 @@
 /* Begin PBXBuildFile section */
 		717D3273273ABBFA006E880E /* hapticFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717D3272273ABBFA006E880E /* hapticFile.swift */; };
 		717D32A6273D1283006E880E /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 717D32A5273D1283006E880E /* Authentication.swift */; };
+		71C27D74274D0D28003B9F02 /* AuthenticationResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C27D73274D0D28003B9F02 /* AuthenticationResource.swift */; };
+		71C27D78274D2FAC003B9F02 /* ApiResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C27D77274D2FAC003B9F02 /* ApiResource.swift */; };
+		71C27D7B274D3095003B9F02 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C27D7A274D3095003B9F02 /* StringExtension.swift */; };
+		71C65061274E11B10036B3B4 /* SDKVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C65060274E11B00036B3B4 /* SDKVariables.swift */; };
+		71C65063274E1A420036B3B4 /* SDKConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C65062274E1A420036B3B4 /* SDKConstants.swift */; };
+		71C65065274E1A750036B3B4 /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C65064274E1A750036B3B4 /* URLConstants.swift */; };
 		71CBD914273A90BE00B4C175 /* ivy_sdk.docc in Sources */ = {isa = PBXBuildFile; fileRef = 71CBD913273A90BE00B4C175 /* ivy_sdk.docc */; };
 		71CBD915273A90BE00B4C175 /* ivy_sdk.h in Headers */ = {isa = PBXBuildFile; fileRef = 71CBD912273A90BE00B4C175 /* ivy_sdk.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		97AE5B50B73A9CF6368F5E14 /* Pods_ivy_sdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1385A0E2F31C604DD0BFB59A /* Pods_ivy_sdk.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1385A0E2F31C604DD0BFB59A /* Pods_ivy_sdk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ivy_sdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		446CD8452E1BF8E012017169 /* Pods-ivy-sdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ivy-sdk.debug.xcconfig"; path = "Target Support Files/Pods-ivy-sdk/Pods-ivy-sdk.debug.xcconfig"; sourceTree = "<group>"; };
 		717D3272273ABBFA006E880E /* hapticFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hapticFile.swift; sourceTree = "<group>"; };
 		717D32A5273D1283006E880E /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
+		71C27D73274D0D28003B9F02 /* AuthenticationResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationResource.swift; sourceTree = "<group>"; };
+		71C27D77274D2FAC003B9F02 /* ApiResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiResource.swift; sourceTree = "<group>"; };
+		71C27D7A274D3095003B9F02 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		71C65060274E11B00036B3B4 /* SDKVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKVariables.swift; sourceTree = "<group>"; };
+		71C65062274E1A420036B3B4 /* SDKConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKConstants.swift; sourceTree = "<group>"; };
+		71C65064274E1A750036B3B4 /* URLConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLConstants.swift; sourceTree = "<group>"; };
 		71CBD90F273A90BE00B4C175 /* Plum.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Plum.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		71CBD912273A90BE00B4C175 /* ivy_sdk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ivy_sdk.h; sourceTree = "<group>"; };
 		71CBD913273A90BE00B4C175 /* ivy_sdk.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = ivy_sdk.docc; sourceTree = "<group>"; };
+		E83DE2D6FF2AE928D6617BCC /* Pods-ivy-sdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ivy-sdk.release.xcconfig"; path = "Target Support Files/Pods-ivy-sdk/Pods-ivy-sdk.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97AE5B50B73A9CF6368F5E14 /* Pods_ivy_sdk.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,8 +61,53 @@
 		717D32A4273D1193006E880E /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				71C27D73274D0D28003B9F02 /* AuthenticationResource.swift */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		71C27D75274D2F84003B9F02 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				71C6505F274E11270036B3B4 /* Variables */,
+				71C6505E274E111D0036B3B4 /* Constants */,
+				71C27D79274D3055003B9F02 /* Extension */,
+				71C27D76274D2F8D003B9F02 /* Network */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		71C27D76274D2F8D003B9F02 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				71C27D77274D2FAC003B9F02 /* ApiResource.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		71C27D79274D3055003B9F02 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				71C27D7A274D3095003B9F02 /* StringExtension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		71C6505E274E111D0036B3B4 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				71C65062274E1A420036B3B4 /* SDKConstants.swift */,
+				71C65064274E1A750036B3B4 /* URLConstants.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		71C6505F274E11270036B3B4 /* Variables */ = {
+			isa = PBXGroup;
+			children = (
+				71C65060274E11B00036B3B4 /* SDKVariables.swift */,
+			);
+			path = Variables;
 			sourceTree = "<group>";
 		};
 		71CBD905273A90BE00B4C175 = {
@@ -53,6 +115,8 @@
 			children = (
 				71CBD911273A90BE00B4C175 /* ivy-sdk */,
 				71CBD910273A90BE00B4C175 /* Products */,
+				95C681CDCBB3BE42BDD4E8F0 /* Pods */,
+				ECE8BBF93FBE00C4C18639F7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -70,9 +134,27 @@
 				71CBD912273A90BE00B4C175 /* ivy_sdk.h */,
 				717D3272273ABBFA006E880E /* hapticFile.swift */,
 				717D32A3273D1177006E880E /* Authentication */,
+				71C27D75274D2F84003B9F02 /* Common */,
 				71CBD913273A90BE00B4C175 /* ivy_sdk.docc */,
 			);
 			path = "ivy-sdk";
+			sourceTree = "<group>";
+		};
+		95C681CDCBB3BE42BDD4E8F0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				446CD8452E1BF8E012017169 /* Pods-ivy-sdk.debug.xcconfig */,
+				E83DE2D6FF2AE928D6617BCC /* Pods-ivy-sdk.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		ECE8BBF93FBE00C4C18639F7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1385A0E2F31C604DD0BFB59A /* Pods_ivy_sdk.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -93,6 +175,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 71CBD918273A90BE00B4C175 /* Build configuration list for PBXNativeTarget "ivy-sdk" */;
 			buildPhases = (
+				3BBBB605891E2AEEDAB7F93A /* [CP] Check Pods Manifest.lock */,
 				71CBD90A273A90BE00B4C175 /* Headers */,
 				71CBD90B273A90BE00B4C175 /* Sources */,
 				71CBD90C273A90BE00B4C175 /* Frameworks */,
@@ -149,6 +232,31 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3BBBB605891E2AEEDAB7F93A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ivy-sdk-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		71CBD90B273A90BE00B4C175 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -156,7 +264,13 @@
 			files = (
 				717D3273273ABBFA006E880E /* hapticFile.swift in Sources */,
 				71CBD914273A90BE00B4C175 /* ivy_sdk.docc in Sources */,
+				71C27D7B274D3095003B9F02 /* StringExtension.swift in Sources */,
 				717D32A6273D1283006E880E /* Authentication.swift in Sources */,
+				71C65063274E1A420036B3B4 /* SDKConstants.swift in Sources */,
+				71C27D78274D2FAC003B9F02 /* ApiResource.swift in Sources */,
+				71C65065274E1A750036B3B4 /* URLConstants.swift in Sources */,
+				71C65061274E11B10036B3B4 /* SDKVariables.swift in Sources */,
+				71C27D74274D0D28003B9F02 /* AuthenticationResource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,7 +401,9 @@
 		};
 		71CBD919273A90BE00B4C175 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 446CD8452E1BF8E012017169 /* Pods-ivy-sdk.debug.xcconfig */;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -316,7 +432,9 @@
 		};
 		71CBD91A273A90BE00B4C175 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E83DE2D6FF2AE928D6617BCC /* Pods-ivy-sdk.release.xcconfig */;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;

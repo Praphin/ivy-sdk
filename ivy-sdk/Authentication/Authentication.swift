@@ -8,29 +8,42 @@
 import Foundation
 
 public class Authentication {
-    
-    public static func authSDK() {
-        
+
+    public static func authSDK(completion: @escaping ((_ code: Int, _ response: [String:Any]?, _ error: Error?)->Void)) {
+
         print("SDK AUTHENTICATION STARTED")
-        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
-        print("Version: \(version)")
-
-        if let path = Bundle.main.path(forResource: "SDK-Info", ofType: "plist") {
-            
-            if let dictionary = NSDictionary(contentsOfFile: path) {
-                
-                if let clientID = dictionary["SDK_CLIENT_ID"] as? String {
-                    print("SDK_CLIENT_ID: \(clientID)")
-                }
-                if let bundleID = dictionary["BUNDLE_ID"] as? String {
-                    print("BUNDLE_ID: \(bundleID)")
-                }
-            }
-
-            print("AUTHENTICATION SUCCESS !!!!!!!!!!!!!!!!!")
-        } else {
-            print("AUTHENTICATION FAILED !!!!!!!!!!!!!!!!!")
+        print("Version: \(SDKVariables.shared.sdkVersion)")
+        
+        guard let clientKey = SDKVariables.shared.SDK_CLIENT_ID else {
+            print("INVALID CLIENT ID")
+            completion(600, nil, nil)
+            return
         }
+        
+        guard let clientToken = SDKVariables.shared.SDK_CLIENT_TOKEN else {
+            print("INVALID TOKEN")
+            completion(600, nil, nil)
+            return
+        }
+        
+        var headers: [String : String] = [:]
+        headers["X-Api-Key"] = clientKey
+        headers["X-Api-Secret"] = clientToken
+
+        
+        ApiResource().apiCallWithToken(urlStr: SDKVariables().urlConstant(url: URLConstants.authURL), method: .post, header: headers, parameters: nil) { (code, response, error) in
+            if code == 200, let dict = response as? [String:Any] {
+                print(dict)
+                if let data = dict[SDKConstants.data] as? [String:Any] {
+                    completion(code, data, error)
+                } else {
+                    completion(code, nil, error)
+                }
+            } else {
+                completion(code, nil, error)
+            }
+        }
+
 
     }
 }
