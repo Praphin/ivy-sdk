@@ -26,24 +26,11 @@ public class Authentication {
             return
         }
         
-        var headers: [String : String] = [:]
-        headers["X-Api-Key"] = clientKey
-        headers["X-Api-Secret"] = clientToken
-
-        
-        ApiResource().apiCallWithToken(urlStr: SDKVariables().urlConstant(url: URLConstants.authURL), method: .post, header: headers, parameters: nil) { (code, response, error) in
-            if code == 200, let dict = response as? [String:Any] {
-                print(dict)
-                if let data = dict[SDKConstants.data] as? [String:Any] {
-                    completion(code, data, error)
-                } else {
-                    completion(code, nil, error)
-                }
-            } else {
-                completion(code, nil, error)
+        AuthenticationResource().authenticate(apiKey: clientKey, apiSecret: clientToken) { code, response, error in
+            if error == nil {
+                print("Response: \(response)")
             }
         }
-
 
     }
 }
