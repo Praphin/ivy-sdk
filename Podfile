@@ -7,6 +7,6 @@ target 'ivy-sdk' do
 
   # Pods for ivy-sdk
 
-pod 'Alamofire'
+#pod 'Alamofire'
 
 end
