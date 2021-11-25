@@ -62,6 +62,21 @@ class SDKVariables: NSObject {
         return nil
     }()
     
+    var CLIENT_BUNDLE_ID:String? = {
+        
+        if let path = Bundle.main.path(forResource: "SDK-Info", ofType: "plist") {
+
+            if let dictionary = NSDictionary(contentsOfFile: path) {
+
+                if let bundleID = dictionary["BUNDLE_ID"] as? String {
+                    print("SDK_CLIENT_ID: \(bundleID)")
+                    return bundleID
+                }
+            }
+        }
+        return nil
+    }()
+    
     var host:String = {
         
         guard let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"]  as? String else {

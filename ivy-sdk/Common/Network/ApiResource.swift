@@ -130,7 +130,8 @@ class ApiResource: NSObject {
   
         headerData["x-id-token"] = SDKVariables.shared.SDK_CLIENT_ID ?? ""
         headerData["x-access-token"] = SDKVariables.shared.SDK_CLIENT_TOKEN ?? ""
-        
+        headerData["X-App-Bundle"] = SDKVariables.shared.CLIENT_BUNDLE_ID ?? ""
+
         print("headers: \(headerData)")
         
         self.apiCall(urlStr: urlStr, method: method, header: headerData, parameters: parameters) { (code, response, error) in
