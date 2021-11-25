@@ -26,10 +26,9 @@ public class Authentication {
             return
         }
         
-        AuthenticationResource().authenticate(apiKey: clientKey, apiSecret: clientToken) { code, response, error in
-            if error == nil {
-                print("Response: \(response)")
-            }
+        AuthenticationResource().authenticate { code, response, error in
+            print("Response: \(response)")
+            completion(code, response, error)
         }
 
     }

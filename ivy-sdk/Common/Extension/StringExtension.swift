@@ -11,16 +11,25 @@ extension String {
 
     var isNameValid:Bool {
         if count > 3 {
-//            if AppLanguage.shared.language == AppLang.english {
-                let characterSet = NSCharacterSet(charactersIn: "ABCDEFGHIJKLMONPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz. ")
-                return rangeOfCharacter(from: characterSet.inverted) == nil
-//            }
-//            else {
-//                return true
-//            }
+            let characterSet = NSCharacterSet(charactersIn: "ABCDEFGHIJKLMONPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz. ")
+            return rangeOfCharacter(from: characterSet.inverted) == nil
         }
         return false
 
+    }
+    
+    var isValidMobileNo: Bool {
+        if self.hasOnlyNumbers, (self.count >= 8 && self.count <= 12), let noInt = Int(self), noInt > 10000000 {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    
+    var hasOnlyNumbers: Bool {
+        let characterSet = NSCharacterSet(charactersIn: "0123456789१२३४५६७८९०")
+        return rangeOfCharacter(from: characterSet.inverted) == nil
     }
     
     func isValidEmail() -> Bool {

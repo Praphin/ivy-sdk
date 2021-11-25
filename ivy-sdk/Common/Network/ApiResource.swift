@@ -128,35 +128,29 @@ class ApiResource: NSObject {
 //        headerData["x-id-token"] = AppVariable.shared.getValueFromUserDefault(key: DataKey.idToken) as? String
 //        headerData["x-access-token"] = UserData.shared?.token
   
-        headerData["x-id-token"] = ""
-        headerData["x-access-token"] = ""
-
-        if urlStr.contains("chat.wellthy.app/conversation/metadata") {
-            print(urlStr)
-        }
+        headerData["x-id-token"] = SDKVariables.shared.SDK_CLIENT_ID ?? ""
+        headerData["x-access-token"] = SDKVariables.shared.SDK_CLIENT_TOKEN ?? ""
         
-        if urlStr.contains("chat.wellthy.app/user/register") {
-            print(urlStr)
-        }
-
+        print("headers: \(headerData)")
+        
         self.apiCall(urlStr: urlStr, method: method, header: headerData, parameters: parameters) { (code, response, error) in
-            if urlStr.contains("chat.wellthy.app/user/register") {
-                print(urlStr)
-            }
-            if code == 401 && urlStr.contains("chat.wellthy.app") {
-                print(urlStr)
-            }
-            if code == 401 && !urlStr.contains("chat.wellthy.app") { // && !urlStr.contains("diary/peakFlow")
-                let work: DispatchWorkItem? = DispatchWorkItem {
-                    
-                    var isTokenExist = false
-                    
-                    if  isTokenExist {
-                        if ApiResource.isTokenUpdated {
-                            print("token-> token updated by another api: \(u)")
-                            workItems.removeAll()
-                            callWithDelay()
-                        }
+            
+            print(response)
+            
+            if code == 401 {
+                
+                completion(code, response, error)
+                
+//                let work: DispatchWorkItem? = DispatchWorkItem {
+//
+//                    var isTokenExist = false
+//
+//                    if  isTokenExist {
+//                        if ApiResource.isTokenUpdated {
+//                            print("token-> token updated by another api: \(u)")
+//                            workItems.removeAll()
+//                            callWithDelay()
+//                        }
 //                        else if ApiResource.isTokenRefreshing == false {
 //                            print("token-> updating token: \(u)")
 //                            ApiResource.isTokenRefreshing = true
@@ -197,24 +191,24 @@ class ApiResource: NSObject {
 //                        else {
 //                            completion(code, response, error)
 //                        }
-                    }
-                    else {
-                        print("token-> token expired need to logout: \(u)")
-                        for work in workItems {
-                            work.cancel()
-                        }
-                        workItems.removeAll()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                            ApiResource.isTokenRefreshing = false
-                        }
-                    }
-                }
-                if let work = work {
-                    workItems.append(work)
-                }
-                concurrentQueue.async(flags: .barrier) {
-                    work?.perform()
-                }
+//                    }
+//                    else {
+//                        print("token-> token expired need to logout: \(u)")
+//                        for work in workItems {
+//                            work.cancel()
+//                        }
+//                        workItems.removeAll()
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+//                            ApiResource.isTokenRefreshing = false
+//                        }
+//                    }
+//                }
+//                if let work = work {
+//                    workItems.append(work)
+//                }
+//                concurrentQueue.async(flags: .barrier) {
+//                    work?.perform()
+//                }
             }
             else {
                 completion(code, response, error)
@@ -300,33 +294,4 @@ class ApiResource: NSObject {
         }
     }
     
-    func imageDownload(url : URL, success:@escaping ((_ image: UIImage)->Void), failure: @escaping ((_ error: Error)->Void)) {
-        do {
-            _ = AF.request(url).responseData { (responseData) in
-                DispatchQueue.main.async {
-                    switch responseData.result {
-                    case .success(let imageData):
-                        let img = UIImage(data: imageData) ?? UIImage()
-                        success(img)
-                    case .failure(let error):
-                        failure(error)
-                    }
-                }
-            }
-            /*
-             let dataRequest = AF.request(url)
-             dataRequest.responseImage { response in
-             DispatchQueue.main.async {
-             switch response.result {
-             case .success(let image):
-             success(image)
-             case .failure(let error):
-             failure(error)
-             }
-             }
-             }   */
-        } catch {
-            print("not valid url : \(url)")
-        }
-    }
 }

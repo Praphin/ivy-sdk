@@ -10,5 +10,6 @@ import Foundation
 struct URLConstants {
 
     static let authURL = "/auth"
+    static let registerURL = "/register"
 
 }
