@@ -125,12 +125,11 @@ class ApiResource: NSObject {
         if let header = header {
             headerData = header
         }
-//        headerData["x-id-token"] = AppVariable.shared.getValueFromUserDefault(key: DataKey.idToken) as? String
-//        headerData["x-access-token"] = UserData.shared?.token
   
-        headerData["x-id-token"] = SDKVariables.shared.SDK_CLIENT_ID ?? ""
-        headerData["x-access-token"] = SDKVariables.shared.SDK_CLIENT_TOKEN ?? ""
+        headerData["X-Api-Key"] = SDKVariables.shared.SDK_CLIENT_ID ?? ""
+        headerData["X-Api-Secret"] = SDKVariables.shared.SDK_CLIENT_TOKEN ?? ""
         headerData["X-App-Bundle"] = SDKVariables.shared.CLIENT_BUNDLE_ID ?? ""
+        headerData["Content-Type"] = "application/x-www-form-urlencoded"
 
         print("headers: \(headerData)")
         
