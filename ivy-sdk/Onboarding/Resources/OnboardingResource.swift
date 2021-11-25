@@ -11,7 +11,7 @@ class OnboardingResource {
     
     func register(param: [String: Any], completion: @escaping ((_ code: Int, _ response: [String:Any]?, _ error: Error?)->Void)) {
             
-        ApiResource().apiCallWithToken(urlStr: SDKVariables().urlConstant(url: URLConstants.registerURL), method: .post, header: nil, parameters: nil) { (code, response, error) in
+        ApiResource().apiCallWithToken(urlStr: SDKVariables().urlConstant(url: URLConstants.registerURL), method: .post, header: nil, parameters: param) { (code, response, error) in
 
             if code == 200, let dict = response as? [String:Any] {
                 print(dict)

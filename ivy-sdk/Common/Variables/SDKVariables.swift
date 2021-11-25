@@ -88,5 +88,22 @@ class SDKVariables: NSObject {
     func urlConstant(url: String) -> String {
         return host + url
     }
+    
+    func authToken() -> String? {
+        if let token = getValueFromUserDefault(key: SDKConstants.authToken) as? String, token.count > 0 {
+            return token
+        }
+        return nil
+    }
+
+    func saveValueInUserDefault(key k: String , value : Any?) {
+        UserDefaults.standard.set(value, forKey:k)
+        UserDefaults.standard.synchronize()
+    }
+
+    func getValueFromUserDefault(key k : String) -> Any? {
+        return UserDefaults.standard.value(forKey: k)
+    }
+
 
 }

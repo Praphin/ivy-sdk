@@ -126,10 +126,11 @@ class ApiResource: NSObject {
             headerData = header
         }
   
-        headerData["X-Api-Key"] = SDKVariables.shared.SDK_CLIENT_ID ?? ""
-        headerData["X-Api-Secret"] = SDKVariables.shared.SDK_CLIENT_TOKEN ?? ""
-        headerData["X-App-Bundle"] = SDKVariables.shared.CLIENT_BUNDLE_ID ?? ""
         headerData["Content-Type"] = "application/x-www-form-urlencoded"
+        
+        if let token = SDKVariables.shared.authToken() {
+            headerData["x-access-token"] = token
+        }
 
         print("headers: \(headerData)")
         
