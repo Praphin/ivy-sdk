@@ -18,21 +18,20 @@ class AuthenticationResource {
 
         ApiResource().apiCallWithToken(urlStr: SDKVariables().urlConstant(url: URLConstants.authURL), method: .post, header: header, parameters: nil) { (code, response, error) in
 
-            if code == 200, let dict = response as? [String:Any] {
-                print(dict)
-                if let data = dict[SDKConstants.data] as? [String:Any] {
-                    if let token = data[SDKConstants.token] as? String {
-                        SDKVariables.shared.saveValueInUserDefault(key: SDKConstants.authToken, value: token)
-                    }
-                    completion(code, data, error)
-                } else {
-                    completion(code, nil, error)
+            if code == 200, let dict = response as? [String:Any], let dataresponse = dict[SDKConstants.data] as? [String:Any], let data = try? JSONSerialization.data(withJSONObject: dataresponse, options: .prettyPrinted) {
+                
+                do {
+                    let authData = try JSONDecoder().decode(AuthResponse.self, from: data)
+                        SDKVariables.shared.saveValueInUserDefault(key: SDKConstants.authToken, value: authData.token)
+                    completion(code, authData.response(), nil)
+                }
+                catch {
+                    DebugLogger().log(error.localizedDescription)
+                    completion(SDKErrorCode.code_600,nil,nil)
                 }
             } else {
-                completion(code, nil, error)
+                completion(SDKErrorCode.code_600,nil,nil)
             }
         }
-
     }
-    
 }

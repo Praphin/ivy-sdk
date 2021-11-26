@@ -19,6 +19,7 @@ struct SDKErrorMessage {
 }
 
 struct SDKErrorCode {
-    static let code_400 = "400"
-    static let code_600 = "600"
+    static let code_200 = 200
+    static let code_400 = 400
+    static let code_600 = 600
 }

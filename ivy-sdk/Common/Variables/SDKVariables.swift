@@ -39,7 +39,7 @@ class SDKVariables: NSObject {
             if let dictionary = NSDictionary(contentsOfFile: path) {
 
                 if let clientID = dictionary["SDK_CLIENT_ID"] as? String {
-                    print("SDK_CLIENT_ID: \(clientID)")
+                    DebugLogger().log("SDK_CLIENT_ID: \(clientID)")
                     return clientID
                 }
             }
@@ -54,7 +54,7 @@ class SDKVariables: NSObject {
             if let dictionary = NSDictionary(contentsOfFile: path) {
 
                 if let clientToken = dictionary["SDK_CLIENT_TOKEN"] as? String {
-                    print("SDK_CLIENT_ID: \(clientToken)")
+                    DebugLogger().log("SDK_CLIENT_ID: \(clientToken)")
                     return clientToken
                 }
             }
@@ -69,7 +69,7 @@ class SDKVariables: NSObject {
             if let dictionary = NSDictionary(contentsOfFile: path) {
 
                 if let bundleID = dictionary["BUNDLE_ID"] as? String {
-                    print("SDK_CLIENT_ID: \(bundleID)")
+                    DebugLogger().log("SDK_CLIENT_ID: \(bundleID)")
                     return bundleID
                 }
             }

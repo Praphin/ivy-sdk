@@ -36,7 +36,7 @@ class ApiResource: NSObject {
         do {
             
             guard let url = try urlStr.addingUrlPercentEncoding()?.asURL() else { return
-                print("not valid url : \(urlStr)")
+                DebugLogger().log("not valid url : \(urlStr)")
             }
             
             let dataRequest = AF.request(url, method: method, parameters: parameters, encoding: URLEncoding.default, headers: headers)
@@ -59,7 +59,7 @@ class ApiResource: NSObject {
             }
             
         }catch {
-            print("not valid url : \(urlStr)")
+            DebugLogger().log("not valid url : \(urlStr)")
         }
     }
     
@@ -132,12 +132,14 @@ class ApiResource: NSObject {
             headerData["x-access-token"] = token
         }
 
-        print("headers: \(headerData)")
-        
+        DebugLogger().log("URL: \(urlStr)")
+        DebugLogger().log"headers: \(headerData)"
+        DebugLogger().log("Paramters: \(parameters)")
+
         self.apiCall(urlStr: urlStr, method: method, header: headerData, parameters: parameters) { (code, response, error) in
             
-            print(response)
-            
+            DebugLogger().log("Response: \(response)")
+
             if code == 401 {
                 
                 completion(code, response, error)
@@ -148,19 +150,19 @@ class ApiResource: NSObject {
 //
 //                    if  isTokenExist {
 //                        if ApiResource.isTokenUpdated {
-//                            print("token-> token updated by another api: \(u)")
+//                           DebugLogger().log("token-> token updated by another api: \(u)")
 //                            workItems.removeAll()
 //                            callWithDelay()
 //                        }
 //                        else if ApiResource.isTokenRefreshing == false {
-//                            print("token-> updating token: \(u)")
+//                            DebugLogger().log("token-> updating token: \(u)")
 //                            ApiResource.isTokenRefreshing = true
 //                            var dict = [String: String]()
 //                            dict["token"] = UserData.shared?.token
 //                            dict["refreshtoken"] = UserData.shared?.refreshtoken
 //                            self.apiCall(urlStr: URLConstants.refreshTokenURL, method: .post, header: nil, parameters: dict) { (code, response, error) in
 //                                if code == 200, let response = response as? [String:Any], let dataDict = response["data"] as? [String:Any] {
-//                                    print("token-> token updated: \(u)")
+//                                    DebugLogger().log("token-> token updated: \(u)")
 //                                    let newToken = dataDict["token"]
 //                                    let newRefreshtoken = dataDict["refreshtoken"]
 //                                    UserData.shared?.token = newToken as? String
@@ -172,7 +174,7 @@ class ApiResource: NSObject {
 //                                    callWithDelay()
 //                                }
 //                                else {
-//                                    print("token-> token expired need to logout: \(u)")
+//                                    DebugLogger().log("token-> token expired need to logout: \(u)")
 //                                    for work in workItems {
 //                                        work.cancel()
 //                                    }
@@ -194,7 +196,7 @@ class ApiResource: NSObject {
 //                        }
 //                    }
 //                    else {
-//                        print("token-> token expired need to logout: \(u)")
+//                        DebugLogger().log("token-> token expired need to logout: \(u)")
 //                        for work in workItems {
 //                            work.cancel()
 //                        }
@@ -228,7 +230,8 @@ class ApiResource: NSObject {
         do {
             let completeUrlStr = urlStr.addingUrlPercentEncoding()
             guard let url = try completeUrlStr?.asURL() else { return
-                print("not valid url : \(urlStr)")
+                DebugLogger().log("not valid url : \(urlStr)")
+
             }
             
             var headers: HTTPHeaders?
@@ -257,7 +260,7 @@ class ApiResource: NSObject {
                 }
             }
         } catch {
-            print("not valid url : \(urlStr)")
+            DebugLogger().log("not valid url : \(urlStr)")
         }
     }
     
@@ -287,7 +290,8 @@ class ApiResource: NSObject {
         AF.download(urlStr, to: destination).response { response in
 
             if response.fileURL != nil {
-                print(response.fileURL!)
+                DebugLogger().log(response.fileURL!)
+
                 completion(response.response?.statusCode ?? 200, nil ,nil)
             } else {
                 completion(response.response?.statusCode ?? 600, nil ,nil)
