@@ -112,7 +112,7 @@ class ApiResource: NSObject {
         
     }
     
-    func apiCallWithToken(urlStr : String, method: HTTPMethod, header : [String:String]?, parameters: [String:Any]?, completion:@escaping ((_ code: Int, _ response: Any?, _ error: Error?)->Void)) {
+    func apiCallWithToken(urlStr : String, method: HTTPMethod, header : [String:String]?, parameters: [String:Any]?, encoding: ParameterEncoding = JSONEncoding.default, completion:@escaping ((_ code: Int, _ response: Any?, _ error: Error?)->Void)) {
 
         let u = urlStr
         let callWithDelay: (()->Void) = {
@@ -133,10 +133,10 @@ class ApiResource: NSObject {
         }
 
         DebugLogger().log("URL: \(urlStr)")
-        DebugLogger().log"headers: \(headerData)"
+        DebugLogger().log("headers: \(headerData)")
         DebugLogger().log("Paramters: \(parameters)")
 
-        self.apiCall(urlStr: urlStr, method: method, header: headerData, parameters: parameters) { (code, response, error) in
+        self.apiCall(urlStr: urlStr, method: method, header: headerData, parameters: parameters, encoding: encoding) { (code, response, error) in
             
             DebugLogger().log("Response: \(response)")
 
@@ -224,31 +224,33 @@ class ApiResource: NSObject {
             completion(600, nil,nil)
             return
         }
-        else {
-
-        }
+        
         do {
             let completeUrlStr = urlStr.addingUrlPercentEncoding()
             guard let url = try completeUrlStr?.asURL() else { return
                 DebugLogger().log("not valid url : \(urlStr)")
-
             }
             
+            guard let url = URL(string: urlStr) else {
+                return
+            }
+
             var headers: HTTPHeaders?
             
             if let header = header {
                 headers = HTTPHeaders(header)
             }
             
+            
             let dataRequest = AF.request(url, method: method, parameters: parameters, encoding: encoding, headers: headers)
             dataRequest.responseJSON { (response) in
+                             
                 DispatchQueue.main.async {
                     if method == .head {
                         let value: Any? = response.response?.allHeaderFields
                         completion(response.response?.statusCode ?? 600, value,nil)
                     }
                     else {
-
                         switch response.result {
                         case .success(let value):
                             completion(response.response?.statusCode ?? 600, value,nil)
@@ -299,4 +301,9 @@ class ApiResource: NSObject {
         }
     }
     
+}
+
+struct Login: Encodable {
+    let email: String
+    let password: String
 }

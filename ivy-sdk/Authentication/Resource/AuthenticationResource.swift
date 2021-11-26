@@ -21,8 +21,9 @@ class AuthenticationResource {
             if code == 200, let dict = response as? [String:Any], let dataresponse = dict[SDKConstants.data] as? [String:Any], let data = try? JSONSerialization.data(withJSONObject: dataresponse, options: .prettyPrinted) {
                 
                 do {
-                    let authData = try JSONDecoder().decode(AuthResponse.self, from: data)
+                    let authData = try JSONDecoder().decode(AuthData.self, from: data)
                         SDKVariables.shared.saveValueInUserDefault(key: SDKConstants.authToken, value: authData.token)
+                    authData.save()
                     completion(code, authData.response(), nil)
                 }
                 catch {
